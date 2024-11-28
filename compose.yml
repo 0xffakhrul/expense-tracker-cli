@@ -1,0 +1,29 @@
+version: "3"
+services:
+  app:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - 13000:3000
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
+      POSTGRES_DATABASE: db123
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    user: node
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: db123
+    volumes:
+      - expense-tracker:/data/db
+
+volumes:
+  expense-tracker:
